@@ -5,7 +5,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 
-const ImageUpload: React.FC = ({ setMode }) => {
+type Props = {
+  setMode: React.Dispatch<React.SetStateAction<"main" | "upload" | "webcam">>;
+};
+
+
+const ImageUpload: React.FC<Props> = ({ setMode }) => {
   const [capturedImages, setCapturedImages] = useState<string[]>([]);
   const { toast } = useToast();
 
@@ -35,17 +40,16 @@ const ImageUpload: React.FC = ({ setMode }) => {
 
   return (
     <div className="min-h-screen bg-[#F5F5D5] text-[#2F321E]">
-      <main className="container px-4 py-12">
-        <h1 className="text-2xl font-bold mb-2" style={{ fontSize: "40px" }}>
-            이미지 업로드하기
-        </h1>
+      <main className="container px-4 py-14 mb-4">
+        <h1 className="text-3xl font-bold mb-2">이미지 업로드하기</h1>
         <div className="flex items-center justify-between mb-2 mr-3">
-            <p className="text-sm text-[#414014BA]" style={{ fontSize: "20px" }}>
+            <p className="text-lg text-[#414014BA]">
                 나무 사진을 업로드하기, 이것에 꽃이 핀 나이보세요. AI가 가지치기할 가지를 알려드려요.
             </p>
             <img 
                 src='https://velog.velcdn.com/images/wldnjsl2001/post/9e3260fd-6d65-4027-ba8d-82d3b621d03e/image.png' 
-                style={{ width: "50px", height: "50px" }} 
+                className="w-10 h-10"
+                onClick={() => setMode("webcam")}
             />
         </div>
 

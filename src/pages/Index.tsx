@@ -1,12 +1,7 @@
 import { useState } from "react";
-import WebcamView from "@/components/WebcamView";
-import CaptureButton from "@/components/CaptureButton";
-import PhotoGallery from "@/components/PhotoGallery";
 import { Button } from "@/components/ui/button";
-import { Upload, Video } from "lucide-react";
-import ImageUpload from "./imageUpload";
-import { Toaster } from "@/components/ui/toaster";
-import { useToast } from "@/hooks/use-toast";
+import ImageUpload from "./ImageUpload";
+import Webcam from "./Webcam";
 
 const NAV_ITEMS = [
   { label: "홈", href: "#" },
@@ -16,19 +11,6 @@ const NAV_ITEMS = [
 
 const Index = () => {
   const [mode, setMode] = useState<"main" | "upload" | "webcam">("main");
-  const [capturedImages, setCapturedImages] = useState<string[]>([]);
-  const [isWebcamActive, setIsWebcamActive] = useState(false);
-  const { toast } = useToast();
-
-  const handleCapture = (imageSrc: string) => {
-    setCapturedImages((prev) => [imageSrc, ...prev]);
-  };
-
-  const handleDeleteImage = (index: number) => {
-    setCapturedImages((prevImages) => 
-      prevImages.filter((_, i) => i !== index)
-    );
-  };
 
   return (
     <div className="min-h-screen bg-[#F3F4CC] flex flex-col">
@@ -87,92 +69,7 @@ const Index = () => {
       {mode === "upload" && <ImageUpload setMode={setMode}/>}
 
       {/* 이미지 업로드/웹캠 모드 구현은 기존 코드 활용 */}
-      {mode === "webcam" && (
-        <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 text-white">
-          <header className="container mx-auto py-6 px-4">
-            <div className="flex items-center justify-between">
-              <h1 className="text-2xl md:text-3xl font-bold flex items-center gap-2">
-                <img src={'https://velog.velcdn.com/images/wldnjsl2001/post/856506ea-317b-4a82-ae1a-8c1d9e9228f6/image.png'} style={{ width: '271px', height: '272px' }}/>
-                <span>프루닝</span>
-              </h1>
-              <div className="flex gap-4">
-                <Button 
-                  onClick={() => setIsWebcamActive(false)}
-                  className={`rounded-full px-6 flex items-center gap-2 ${
-                    !isWebcamActive 
-                      ? 'bg-blue-600 hover:bg-blue-700' 
-                      : 'bg-slate-700 hover:bg-slate-600'
-                  } text-white`}
-                >
-                  <Upload className="h-4 w-4" />
-                  이미지 업로드
-                </Button>
-                <Button 
-                  onClick={() => setIsWebcamActive(true)}
-                  className={`rounded-full px-6 flex items-center gap-2 ${
-                    isWebcamActive 
-                      ? 'bg-purple-600 hover:bg-purple-700' 
-                      : 'bg-slate-700 hover:bg-slate-600'
-                  } text-white`}
-                >
-                  <Video className="h-4 w-4" />
-                  실시간 라이브
-                </Button>
-              </div>
-            </div>
-          </header>
-
-          <main className="container mx-auto px-4 py-8">
-            {isWebcamActive ? (
-              <div className="flex flex-col md:flex-row gap-8">
-                <div className="flex-1 flex flex-col items-center">
-                  <div className="w-full max-w-2xl">
-                    <WebcamView onCapture={handleCapture} />
-                    <div className="mt-6 flex justify-center">
-                      <CaptureButton onCapture={() => {
-                        const webcamElement = document.querySelector("video");
-                        if (webcamElement) {
-                          const canvas = document.createElement("canvas");
-                          canvas.width = webcamElement.videoWidth;
-                          canvas.height = webcamElement.videoHeight;
-                          canvas.getContext("2d")?.drawImage(webcamElement, 0, 0);
-                          const image = canvas.toDataURL("image/png");
-                          handleCapture(image);
-                        }
-                      }} />
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="md:w-1/3 w-full">
-                  <h2 className="text-xl font-semibold mb-4">갤러리</h2>
-                  <PhotoGallery 
-                    images={capturedImages} 
-                    onDelete={handleDeleteImage} 
-                  />
-                </div>
-              </div>
-            ) : (
-              <div className="flex flex-col md:flex-row gap-8">
-                {/* <div className="flex-1">
-                  <div className="max-w-2xl mx-auto">
-                    <DropZone onFileDrop={handleFileDrop} />
-                  </div>
-                </div>
-                
-                <div className="md:w-1/3 w-full">
-                  <h2 className="text-xl font-semibold mb-4">갤러리</h2>
-                  <PhotoGallery 
-                    images={capturedImages} 
-                    onDelete={handleDeleteImage} 
-                  />
-                </div> */}
-              </div>
-            )}
-          </main>
-          <Toaster />
-        </div>
-      )}
+      {mode === "webcam" && <Webcam setMode={setMode} />}
     </div>
   );
 };
