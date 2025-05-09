@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import WebcamView from "@/components/WebcamView";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/hooks/use-toast";
@@ -10,6 +10,56 @@ type Props = {
 const Webcam: React.FC<Props> = ({ setMode }) => {
   const [isWebcamActive, setIsWebcamActive] = useState(false);
   const { toast } = useToast();
+
+  // useEffect(() => {
+  //   let interval: NodeJS.Timeout;
+
+  //   if (isWebcamActive) {
+  //     interval = setInterval(async () => {
+  //       const video = document.querySelector("video");
+  //       if (!video) return;
+
+  //       const canvas = document.createElement("canvas");
+  //       canvas.width = video.videoWidth;
+  //       canvas.height = video.videoHeight;
+  //       canvas.getContext("2d")?.drawImage(video, 0, 0);
+
+  //       const base64 = canvas.toDataURL("image/jpeg");
+  //       const file = dataURLtoFile(base64, "frame.jpg");
+
+  //       // POST: 실시간 백엔드 요청
+  //       const response = await uploadRealtimeFrame(file);
+  //       setProcessedImage(response.imageUrl); // 분석 결과 반영
+  //     }, 1000); // 1초마다 프레임 전송
+  //   }
+
+  //   return () => clearInterval(interval); // 해제
+  // }, [isWebcamActive]);
+
+  const [processedImage, setProcessedImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const video = document.querySelector("video");
+    let interval: NodeJS.Timeout;
+
+    if (video) {
+      interval = setInterval(async () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext("2d")?.drawImage(video, 0, 0);
+        const base64 = canvas.toDataURL("image/jpeg");
+
+        const file = dataURLtoFile(base64, "frame.jpg");
+        const res = await uploadRealtimeFrame(file); // POST 요청
+        setProcessedImage(res.image_url); // 받은 분석 이미지 교체
+      }, 1000); // 매 1초마다 프레임 전송
+    }
+
+    return () => clearInterval(interval);
+  }, []);
+
+
 
   const startCapture = () => {
     setIsWebcamActive(true);
@@ -49,6 +99,8 @@ const Webcam: React.FC<Props> = ({ setMode }) => {
           ) : (
             <div className="flex flex-col items-center justify-center">
               <WebcamView onCapture={(imageSrc) => console.log("Captured image:", imageSrc)} />
+                {processedImage && <img src={processedImage} alt="AI 처리 결과" className="rounded-xl shadow-md w-full max-w-3xl" />}
+
             </div>
           )}
         </div>
