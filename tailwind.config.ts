@@ -20,6 +20,7 @@ const config = {
     extend: {
       fontFamily: {
         bmjua: ["BMJUA", "sans-serif"],
+        gmarket: ["GmarketSans", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

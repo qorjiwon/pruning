@@ -44,7 +44,7 @@ const ImageUpload: React.FC<Props> = ({ setMode }) => {
         <h1 className="text-3xl font-bold mb-2">이미지 업로드하기</h1>
         <div className="flex items-center justify-between mb-2 mr-3">
             <p className="text-lg text-[#414014BA]">
-                나무 사진을 업로드하기, 이것에 꽃이 핀 나이보세요. AI가 가지치기할 가지를 알려드려요.
+                나무 사진을 업로드하거, 이곳에 끌어다 놓아보세요. AI가 가지치기할 가지를 알려드려요.
             </p>
             <img 
                 src='https://velog.velcdn.com/images/wldnjsl2001/post/9e3260fd-6d65-4027-ba8d-82d3b621d03e/image.png' 
@@ -71,7 +71,7 @@ const ImageUpload: React.FC<Props> = ({ setMode }) => {
             </div>
               <div className="flex justify-end">
                 <Button
-                  className="bg-[#A9BB8B] hover:bg-[#bfc7a1] text-[#000000] font-semibold rounded-lg px-4 py-2 flex items-center gap-2 mt-4"
+                  className="bg-[#A9BB8B] hover:bg-[#bfc7a1] text-[#000000] rounded-lg px-4 py-2 flex items-center gap-2 mt-4"
                   onClick={handleDownload}
                 >
                   <Download className="w-4 h-4" />
