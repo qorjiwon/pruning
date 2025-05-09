@@ -32,7 +32,7 @@ const Webcam: React.FC<Props> = ({ setMode }) => {
         const result = await uploadImage(file);
 
         setCapturedImages((prev) => [result.visualized_image_base64, ...prev.slice(0, 7)]); // 최대 8개까지 유지
-      }, 2000);
+      }, 3500);
     }
 
     return () => clearInterval(interval);
