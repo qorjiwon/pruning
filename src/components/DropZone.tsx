@@ -50,8 +50,8 @@ const DropZone = ({ onFileDrop }: DropZoneProps) => {
       onDrop={handleDrop}
     >
       <div className="flex flex-col items-center gap-2">
-        <Upload className="h-8 w-8 text-slate-400" />
-        <p className="text-slate-400">
+        <img src="https://velog.velcdn.com/images/wldnjsl2001/post/9a921a26-2fc0-412d-97e2-9bb74aadec14/image.png" alt="Upload" className="h-16 w-16" />
+        <p className="text-black text-[25px]">
           이미지를 여기에 드래그하거나 클릭하여 업로드하세요
         </p>
         <p className="text-sm text-slate-500">
