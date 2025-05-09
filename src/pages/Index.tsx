@@ -20,7 +20,7 @@ const Index = () => {
         <div className="flex items-center justify-between">
           <h1 className="text-2xl md:text-3xl font-bold flex items-center gap-2">
             <Webcam className="h-6 w-6 md:h-8 md:w-8" />
-            <span>웹캠 스튜디오</span>
+            <span>프루닝</span>
           </h1>
           {!isWebcamActive && (
             <Button 
@@ -64,7 +64,7 @@ const Index = () => {
           <div className="flex flex-col items-center justify-center py-20">
             <div className="bg-slate-800/50 p-10 rounded-2xl flex flex-col items-center max-w-lg mx-auto">
               <Webcam className="h-20 w-20 mb-6 text-blue-400" />
-              <h2 className="text-2xl font-bold mb-4">웹캠 스튜디오에 오신 것을 환영합니다</h2>
+              <h2 className="text-2xl font-bold mb-4">프루닝에 오신 것을 환영합니다</h2>
               <p className="text-slate-300 mb-8 text-center">
                 웹캠을 활성화하고 사진을 촬영하여 갤러리에 저장할 수 있습니다.
               </p>
