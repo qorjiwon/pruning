@@ -5,6 +5,7 @@ import CaptureButton from "@/components/CaptureButton";
 import PhotoGallery from "@/components/PhotoGallery";
 import { Button } from "@/components/ui/button";
 import { Webcam } from "lucide-react";
+import { Toaster } from "@/components/ui/toaster";
 
 const Index = () => {
   const [capturedImages, setCapturedImages] = useState<string[]>([]);
@@ -12,6 +13,12 @@ const Index = () => {
 
   const handleCapture = (imageSrc: string) => {
     setCapturedImages((prev) => [imageSrc, ...prev]);
+  };
+
+  const handleDeleteImage = (index: number) => {
+    setCapturedImages((prevImages) => 
+      prevImages.filter((_, i) => i !== index)
+    );
   };
 
   return (
@@ -57,7 +64,10 @@ const Index = () => {
             
             <div className="md:w-1/3 w-full">
               <h2 className="text-xl font-semibold mb-4">갤러리</h2>
-              <PhotoGallery images={capturedImages} />
+              <PhotoGallery 
+                images={capturedImages} 
+                onDelete={handleDeleteImage} 
+              />
             </div>
           </div>
         ) : (
@@ -78,6 +88,7 @@ const Index = () => {
           </div>
         )}
       </main>
+      <Toaster />
     </div>
   );
 };
