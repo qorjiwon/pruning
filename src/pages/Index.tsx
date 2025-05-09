@@ -21,14 +21,14 @@ const Index = () => {
             alt="프루닝 로고"
             style={{ width: 48, height: 48 }}
           />
-          <span className="text-2xl font-bold text-[#FFFFFF] ml-2">프루닝</span>
+          <span className="text-3xl font-bmjua text-[#FFFFFF] ml-2">프루닝</span>
         </div>
         <div className="flex gap-8">
           {NAV_ITEMS.map((item) => (
             <a
               key={item.label}
               href={item.href}
-              className="text-[#FFFFFF] font-semibold hover:underline"
+              className="text-[20px] text-[#FFFFFF] font-bmjua hover:underline"
             >
               {item.label}
             </a>
