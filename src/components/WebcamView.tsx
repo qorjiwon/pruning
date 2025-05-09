@@ -5,10 +5,10 @@ import { useToast } from "@/hooks/use-toast";
 
 interface WebcamViewProps {
   onCapture: (imageSrc: string) => void;
+  videoRef: React.RefObject<HTMLVideoElement>;
 }
 
-const WebcamView = ({ onCapture }: WebcamViewProps) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
+const WebcamView = ({ onCapture, videoRef }: WebcamViewProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
@@ -52,7 +52,7 @@ const WebcamView = ({ onCapture }: WebcamViewProps) => {
   }, [toast]);
 
   return (
-    <div className="relative rounded-xl overflow-hidden shadow-lg bg-slate-800 border border-slate-700">
+    <div className="relative rounded-xl overflow-hidden shadow-lg bg-slate-800">
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center bg-slate-900">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
