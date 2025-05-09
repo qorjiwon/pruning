@@ -56,7 +56,7 @@ export const uploadImage = async (file: File): Promise<PruningResponse> => {
 export const getRecommendationImage = async (
   imageBaseFilename: string,
   maxAttempts: number = 5,
-  intervalMs: number = 1500
+  intervalMs: number = 5000
 ): Promise<string> => {
   const params = {
     image_base_filename: imageBaseFilename.replace(/\.[^/.]+$/, ""),
