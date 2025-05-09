@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import ImageUpload from "./ImageUpload";
 import Webcam from "./Webcam";
+import { Upload, Camera } from "lucide-react";
 
 const NAV_ITEMS = [
   { label: "홈", href: "#" },
@@ -52,15 +53,17 @@ const Index = () => {
           </p>
           <div className="flex gap-6 justify-center">
             <Button
-              className="bg-[#bfc7a1] text-[#3d3d3d] px-20 py-8 rounded-lg text-lg font-semibold hover:bg-[#a6b47a]"
+              className="bg-[#bfc7a1] text-[#414014] px-20 py-8 rounded-lg text-lg font-semibold hover:bg-[#a6b47a]"
               onClick={() => setMode("upload")}
             >
+              <Upload className="w-5 h-5 text-[#414014]" />
               이미지 업로드하기
             </Button>
             <Button
-              className="bg-[#bfc7a1] text-[#3d3d3d] px-20 py-8 rounded-lg text-lg font-semibold hover:bg-[#a6b47a]"
+              className="bg-[#bfc7a1] text-[#414014] px-20 py-8 rounded-lg text-lg font-semibold hover:bg-[#a6b47a]"
               onClick={() => setMode("webcam")}
             >
+              <Camera className="w-5 h-5 text-[#414014]" />
               웹캠으로 촬영하기
             </Button>
           </div>
