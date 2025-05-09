@@ -1,15 +1,17 @@
-
 import { useState } from "react";
 import WebcamView from "@/components/WebcamView";
 import CaptureButton from "@/components/CaptureButton";
 import PhotoGallery from "@/components/PhotoGallery";
+import DropZone from "@/components/DropZone";
 import { Button } from "@/components/ui/button";
-import { Grape } from "lucide-react";
+import { Grape, Upload, Video } from "lucide-react";
 import { Toaster } from "@/components/ui/toaster";
+import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
   const [capturedImages, setCapturedImages] = useState<string[]>([]);
   const [isWebcamActive, setIsWebcamActive] = useState(false);
+  const { toast } = useToast();
 
   const handleCapture = (imageSrc: string) => {
     setCapturedImages((prev) => [imageSrc, ...prev]);
@@ -21,6 +23,20 @@ const Index = () => {
     );
   };
 
+  const handleFileDrop = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      if (e.target?.result) {
+        setCapturedImages((prev) => [e.target.result as string, ...prev]);
+        toast({
+          title: "이미지 업로드",
+          description: "이미지가 성공적으로 업로드되었습니다.",
+        });
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 text-white">
       <header className="container mx-auto py-6 px-4">
@@ -29,18 +45,34 @@ const Index = () => {
             <Grape className="h-6 w-6 md:h-8 md:w-8 text-purple-400" />
             <span>프루닝</span>
           </h1>
-          {!isWebcamActive && (
+          <div className="flex gap-4">
+            <Button 
+              onClick={() => setIsWebcamActive(false)}
+              className={`rounded-full px-6 flex items-center gap-2 ${
+                !isWebcamActive 
+                  ? 'bg-blue-600 hover:bg-blue-700' 
+                  : 'bg-slate-700 hover:bg-slate-600'
+              } text-white`}
+            >
+              <Upload className="h-4 w-4" />
+              이미지 업로드
+            </Button>
             <Button 
               onClick={() => setIsWebcamActive(true)}
-              className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-6"
+              className={`rounded-full px-6 flex items-center gap-2 ${
+                isWebcamActive 
+                  ? 'bg-purple-600 hover:bg-purple-700' 
+                  : 'bg-slate-700 hover:bg-slate-600'
+              } text-white`}
             >
-              시작하기
+              <Video className="h-4 w-4" />
+              실시간 라이브
             </Button>
-          )}
+          </div>
         </div>
       </header>
 
-      <main className="container mx-auto py-8 px-4">
+      <main className="container mx-auto px-4 py-8">
         {isWebcamActive ? (
           <div className="flex flex-col md:flex-row gap-8">
             <div className="flex-1 flex flex-col items-center">
@@ -71,19 +103,19 @@ const Index = () => {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center py-20">
-            <div className="bg-slate-800/50 p-10 rounded-2xl flex flex-col items-center max-w-lg mx-auto">
-              <Grape className="h-20 w-20 mb-6 text-purple-400" />
-              <h2 className="text-2xl font-bold mb-4">프루닝에 오신 것을 환영합니다</h2>
-              <p className="text-slate-300 mb-8 text-center">
-                웹캠을 활성화하고 사진을 촬영하여 갤러리에 저장할 수 있습니다.
-              </p>
-              <Button 
-                onClick={() => setIsWebcamActive(true)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-xl text-lg"
-              >
-                시작하기
-              </Button>
+          <div className="flex flex-col md:flex-row gap-8">
+            <div className="flex-1">
+              <div className="max-w-2xl mx-auto">
+                <DropZone onFileDrop={handleFileDrop} />
+              </div>
+            </div>
+            
+            <div className="md:w-1/3 w-full">
+              <h2 className="text-xl font-semibold mb-4">갤러리</h2>
+              <PhotoGallery 
+                images={capturedImages} 
+                onDelete={handleDeleteImage} 
+              />
             </div>
           </div>
         )}
