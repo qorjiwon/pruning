@@ -62,9 +62,10 @@ const ImageUpload: React.FC<Props> = ({ setMode }) => {
     <div className="min-h-screen bg-[#F5F5D5] text-[#2F321E]">
       <main className="container px-4 py-14 mb-4">
         <h1 className="text-3xl font-bold mb-2">이미지 업로드하기</h1>
+
         <div className="flex items-center justify-between mb-2 mr-3">
             <p className="text-lg text-[#414014BA]">
-                나무 사진을 업로드하거, 이곳에 끌어다 놓아보세요. AI가 가지치기할 가지를 알려드려요.
+                나무 사진을 업로드하거나, 이곳에 끌어다 놓아보세요. AI가 가지치기할 가지를 알려드려요.
             </p>
             <img 
                 src='https://velog.velcdn.com/images/wldnjsl2001/post/9e3260fd-6d65-4027-ba8d-82d3b621d03e/image.png' 
@@ -79,8 +80,16 @@ const ImageUpload: React.FC<Props> = ({ setMode }) => {
           </div>
         ) : (
           <>
-            <div className="bg-[#E3DFB278] rounded-[50px] p-8 flex flex-col gap-8">
-              <div className="flex flex-col md:flex-row gap-6">
+            <div className="bg-[#E3DFB278] rounded-[50px] p-4 pb-8 flex flex-col gap-4">
+              <div className="text-base text-right leading-relaxed mt-2 mr-5">
+                <p className="mb-1">
+                  <span className="text-red-600 font-semibold">빨간색</span>: 주줄기&nbsp;&nbsp;|&nbsp;&nbsp;
+                  <span className="text-yellow-500 font-semibold">노란색</span>: 2년 이상 자란 가지&nbsp;&nbsp;|&nbsp;&nbsp;
+                  <span className="text-green-700 font-semibold">초록색</span>: 2년 이하 자란 가지
+                </p>
+                <p>
+                  <span className="text-red-600 font-bold">X</span>: 가지치기 대상 위치
+                </p>
                 <div className="flex-1 border border-dashed border-[#2F321E] p-4 flex flex-col items-center justify-center aspect-square">
                   <img src={originalImage} alt="original" className="max-h-64 object-contain w-full h-full" />
                 </div>
@@ -97,6 +106,29 @@ const ImageUpload: React.FC<Props> = ({ setMode }) => {
                   )}
                 </div>
               </div>
+
+              <div className="flex flex-col md:flex-row gap-4">
+                <div className="flex-1 pl-3">
+  <div className="w-full h-full overflow-hidden rounded-xl">
+    <img
+      src={capturedImages[0]}
+      alt="original"
+      className="w-full h-full object-cover"
+    />
+  </div>
+</div>
+
+<div className="flex-1 pr-3">
+  <div className="w-full h-full overflow-hidden rounded-xl">
+    <img
+      src={capturedImages[0]}
+      alt="processed"
+      className="w-full h-full object-cover opacity-80"
+    />
+  </div>
+</div>
+              </div>
+
             </div>
               <div className="flex justify-end">
                 <Button
